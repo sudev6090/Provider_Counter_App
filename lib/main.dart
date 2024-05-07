@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:counter_app/provider/counter_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => ProviderCon())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => ProviderCounter())
+      ],
       child: const MaterialApp(home: HomeScreen()),
     );
   }
@@ -25,8 +25,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("hhhhhhhh");
-    final pro = Provider.of<ProviderCon>(context, listen: false);
+    final pro = Provider.of<ProviderCounter>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Counter App'),
@@ -40,8 +39,11 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          Consumer<ProviderCon>(builder: (context, ppp, _) {
-            return Text("${ppp.count.toString()}Times");
+          Consumer<ProviderCounter>(builder: (context, counter, _) {
+            return Text(
+              "${counter.count.toString()}Times",
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            );
           })
         ],
       ),
